@@ -19,9 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.xm.finbox.user.UserLoginForm;
-import com.xm.finbox.user.UserRegistrationForm;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class UserLoginTests {
@@ -42,7 +39,7 @@ public class UserLoginTests {
 		user.setLastName("Bar");
 		user.setEmail("valid-login@mail.com");
 		user.setPassword("foobar");
-		HttpEntity<UserRegistrationForm> registrationRequest = new HttpEntity<UserRegistrationForm>(user, headers);
+		HttpEntity<UserRegistrationForm> registrationRequest = new HttpEntity<>(user, headers);
 
 		ResponseEntity<Void> registrationResponse = restTemplate.exchange("/users", HttpMethod.POST, registrationRequest, Void.class);
 		assertThat(registrationResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -51,7 +48,7 @@ public class UserLoginTests {
 		UserLoginForm credentials = new UserLoginForm();
 		credentials.setEmail("valid-login@mail.com");
 		credentials.setPassword("foobar");
-		HttpEntity<UserLoginForm> loginRequest = new HttpEntity<UserLoginForm>(credentials, headers);
+		HttpEntity<UserLoginForm> loginRequest = new HttpEntity<>(credentials, headers);
 
 		ResponseEntity<Void> loginResponse = restTemplate.exchange("/auth", HttpMethod.POST, loginRequest, Void.class);
 		assertThat(loginResponse.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -64,7 +61,7 @@ public class UserLoginTests {
 		UserLoginForm credentials = new UserLoginForm();
 		credentials.setEmail("valid-login@mail.com");
 		credentials.setPassword("foo");
-		HttpEntity<UserLoginForm> loginRequest = new HttpEntity<UserLoginForm>(credentials, headers);
+		HttpEntity<UserLoginForm> loginRequest = new HttpEntity<>(credentials, headers);
 
 		ResponseEntity<Void> loginResponse = restTemplate.exchange("/auth", HttpMethod.POST, loginRequest, Void.class);
 		assertThat(loginResponse.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
@@ -77,7 +74,7 @@ public class UserLoginTests {
 		UserLoginForm credentials = new UserLoginForm();
 		credentials.setEmail("nonexistent-login@mail.com");
 		credentials.setPassword("foobar");
-		HttpEntity<UserLoginForm> loginRequest = new HttpEntity<UserLoginForm>(credentials, headers);
+		HttpEntity<UserLoginForm> loginRequest = new HttpEntity<>(credentials, headers);
 
 		ResponseEntity<Void> loginResponse = restTemplate.exchange("/auth", HttpMethod.POST, loginRequest, Void.class);
 		assertThat(loginResponse.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);

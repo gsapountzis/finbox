@@ -19,10 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.xm.finbox.user.Account;
-import com.xm.finbox.user.UserLoginForm;
-import com.xm.finbox.user.UserRegistrationForm;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class UserAccountTests {
@@ -43,7 +39,7 @@ public class UserAccountTests {
 		user.setLastName("Bar");
 		user.setEmail("valid-details@mail.com");
 		user.setPassword("foobar");
-		HttpEntity<UserRegistrationForm> registrationRequest = new HttpEntity<UserRegistrationForm>(user, headers);
+		HttpEntity<UserRegistrationForm> registrationRequest = new HttpEntity<>(user, headers);
 
 		ResponseEntity<Void> registrationResponse = restTemplate.exchange("/users", HttpMethod.POST, registrationRequest, Void.class);
 		assertThat(registrationResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -52,7 +48,7 @@ public class UserAccountTests {
 		UserLoginForm credentials = new UserLoginForm();
 		credentials.setEmail("valid-details@mail.com");
 		credentials.setPassword("foobar");
-		HttpEntity<UserLoginForm> loginRequest = new HttpEntity<UserLoginForm>(credentials, headers);
+		HttpEntity<UserLoginForm> loginRequest = new HttpEntity<>(credentials, headers);
 
 		ResponseEntity<Void> loginResponse = restTemplate.exchange("/auth", HttpMethod.POST, loginRequest, Void.class);
 		String authorization = loginResponse.getHeaders().get("Authorization").get(0);
@@ -61,7 +57,7 @@ public class UserAccountTests {
 
 		// Get details
 		headers.set("Authorization", authorization);
-		HttpEntity<Void> detailsRequest = new HttpEntity<Void>(headers);
+		HttpEntity<Void> detailsRequest = new HttpEntity<>(headers);
 
 		ResponseEntity<Account> detailsResponse = restTemplate.exchange("/me", HttpMethod.GET, detailsRequest, Account.class);
 		Account account = detailsResponse.getBody();
@@ -75,7 +71,7 @@ public class UserAccountTests {
 	public void unauthorizedUserShouldNotGetDetails() {
 		HttpHeaders headers = getJsonHeaders();
 		headers.set("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI5NDM3MTU0OS05Mzg1LTQ2MWUtYmFhMi1iNGViYWM2MjU2MzMiLCJzdWIiOiJmb29AYmFyLmNvbSIsImlhdCI6MTUxODY1Mzg0Nn0.gwgrgln_31SjsHHBSb2z-YQR2xjMXUJbwgXVB6NVNuP7cxxmTpEe8wdfg0Knp4qt5a9cekGBx7EEWxBkE1udLA");
-		HttpEntity<Void> detailsRequest = new HttpEntity<Void>(headers);
+		HttpEntity<Void> detailsRequest = new HttpEntity<>(headers);
 
 		ResponseEntity<Account> detailsResponse = restTemplate.exchange("/me", HttpMethod.GET, detailsRequest, Account.class);
 		assertThat(detailsResponse.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);

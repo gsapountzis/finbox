@@ -14,3 +14,4 @@
   as opposed to exceptions
 * implement streaming file download
 * add error details documents
+* test invalid file encoding (base64)

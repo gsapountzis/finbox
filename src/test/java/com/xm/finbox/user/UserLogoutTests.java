@@ -19,9 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.xm.finbox.user.UserLoginForm;
-import com.xm.finbox.user.UserRegistrationForm;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class UserLogoutTests {
@@ -42,7 +39,7 @@ public class UserLogoutTests {
 		user.setLastName("Bar");
 		user.setEmail("valid-logout@mail.com");
 		user.setPassword("foobar");
-		HttpEntity<UserRegistrationForm> registrationRequest = new HttpEntity<UserRegistrationForm>(user, headers);
+		HttpEntity<UserRegistrationForm> registrationRequest = new HttpEntity<>(user, headers);
 
 		ResponseEntity<Void> registrationResponse = restTemplate.exchange("/users", HttpMethod.POST, registrationRequest, Void.class);
 		assertThat(registrationResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -51,7 +48,7 @@ public class UserLogoutTests {
 		UserLoginForm credentials = new UserLoginForm();
 		credentials.setEmail("valid-logout@mail.com");
 		credentials.setPassword("foobar");
-		HttpEntity<UserLoginForm> loginRequest = new HttpEntity<UserLoginForm>(credentials, headers);
+		HttpEntity<UserLoginForm> loginRequest = new HttpEntity<>(credentials, headers);
 
 		ResponseEntity<Void> loginResponse = restTemplate.exchange("/auth", HttpMethod.POST, loginRequest, Void.class);
 		String authorization = loginResponse.getHeaders().get("Authorization").get(0);
@@ -60,7 +57,7 @@ public class UserLogoutTests {
 
 		// Logout
 		headers.set("Authorization", authorization);
-		HttpEntity<Void> logoutRequest = new HttpEntity<Void>(headers);
+		HttpEntity<Void> logoutRequest = new HttpEntity<>(headers);
 
 		ResponseEntity<Void> logoutResponse = restTemplate.exchange("/logout", HttpMethod.POST, logoutRequest, Void.class);
 		assertThat(logoutResponse.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -70,7 +67,7 @@ public class UserLogoutTests {
 	public void unauthorizedUserShouldNotLogout() {
 		HttpHeaders headers = getJsonHeaders();
 		headers.set("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI5NDM3MTU0OS05Mzg1LTQ2MWUtYmFhMi1iNGViYWM2MjU2MzMiLCJzdWIiOiJmb29AYmFyLmNvbSIsImlhdCI6MTUxODY1Mzg0Nn0.gwgrgln_31SjsHHBSb2z-YQR2xjMXUJbwgXVB6NVNuP7cxxmTpEe8wdfg0Knp4qt5a9cekGBx7EEWxBkE1udLA");
-		HttpEntity<Void> logoutRequest = new HttpEntity<Void>(headers);
+		HttpEntity<Void> logoutRequest = new HttpEntity<>(headers);
 
 		ResponseEntity<Void> logoutResponse = restTemplate.exchange("/logout", HttpMethod.POST, logoutRequest, Void.class);
 		assertThat(logoutResponse.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);

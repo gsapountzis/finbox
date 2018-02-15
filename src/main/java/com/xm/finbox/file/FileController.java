@@ -5,6 +5,8 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -60,7 +62,7 @@ public class FileController {
 	 * </ul>
 	 */
 	@PostMapping(path = "/files", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FileMetadata> create(Authentication auth, @RequestBody FileForm file) {
+	public ResponseEntity<FileMetadata> create(Authentication auth, @Valid @RequestBody FileForm file) {
 		try {
 			FileMetadata metadata = fileService.create(auth.getName(), file);
 			return ResponseEntity.ok(metadata);

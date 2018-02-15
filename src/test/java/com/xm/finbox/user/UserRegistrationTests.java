@@ -19,8 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.xm.finbox.user.UserRegistrationForm;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class UserRegistrationTests {
@@ -40,7 +38,7 @@ public class UserRegistrationTests {
 		user.setLastName("Bar");
 		user.setEmail("valid-registration@mail.com");
 		user.setPassword("foobar");
-		HttpEntity<UserRegistrationForm> request = new HttpEntity<UserRegistrationForm>(user, headers);
+		HttpEntity<UserRegistrationForm> request = new HttpEntity<>(user, headers);
 
 		ResponseEntity<Void> response = restTemplate.exchange("/users", HttpMethod.POST, request, Void.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -56,7 +54,7 @@ public class UserRegistrationTests {
 		user.setLastName("Bar");
 		user.setEmail("invalid-registration@mail.com");
 		user.setPassword("foo");
-		HttpEntity<UserRegistrationForm> request = new HttpEntity<UserRegistrationForm>(user, headers);
+		HttpEntity<UserRegistrationForm> request = new HttpEntity<>(user, headers);
 
 		ResponseEntity<Void> response = restTemplate.exchange("/users", HttpMethod.POST, request, Void.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -71,7 +69,7 @@ public class UserRegistrationTests {
 		user.setLastName("Bar");
 		user.setEmail("registration@mail.com");
 		user.setPassword("foobar");
-		HttpEntity<UserRegistrationForm> request = new HttpEntity<UserRegistrationForm>(user, headers);
+		HttpEntity<UserRegistrationForm> request = new HttpEntity<>(user, headers);
 
 		ResponseEntity<Void> response = restTemplate.exchange("/users", HttpMethod.POST, request, Void.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -81,7 +79,7 @@ public class UserRegistrationTests {
 		duplicateUser.setLastName("Baz");
 		duplicateUser.setEmail("registration@mail.com");
 		duplicateUser.setPassword("foobar");
-		HttpEntity<UserRegistrationForm> duplicateRequest = new HttpEntity<UserRegistrationForm>(duplicateUser, headers);
+		HttpEntity<UserRegistrationForm> duplicateRequest = new HttpEntity<>(duplicateUser, headers);
 
 		ResponseEntity<Void> duplicateResponse = restTemplate.exchange("/users", HttpMethod.POST, duplicateRequest, Void.class);
 		assertThat(duplicateResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);

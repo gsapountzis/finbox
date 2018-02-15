@@ -43,7 +43,7 @@ public class FileService {
 		file.setCreationDate(new Date());
 		file.setModificationDate(new Date());
 
-		byte[] contents = Base64Utils.decode(fileDto.getContents().getBytes());
+		byte[] contents = Base64Utils.decodeFromString(fileDto.getContents());
 		file.setContents(contents);
 		file.setFileSize(Long.valueOf(contents.length));
 		String mimeType = mimeTypeUtil.getMimeType(name, contents);
