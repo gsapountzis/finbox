@@ -49,6 +49,7 @@ public class FileController {
 	 * is file name unique globally or per-user ?
 	 * if create only creates, I should return 201 ?
 	 * if create only creates, when is a file modified ?
+	 * missing status code for file exists case, use conflict 409 ?
 	 *
 	 * @param file the name and contents of the new file
 	 * @return

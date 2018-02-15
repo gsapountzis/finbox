@@ -1,4 +1,4 @@
-package com.xm.finbox;
+package com.xm.finbox.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
