@@ -19,11 +19,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.xm.finbox.user.UserRegisterForm;
+import com.xm.finbox.user.UserRegistrationForm;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class UserIntegrationTests {
+public class UserRegistrationTests {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -33,16 +33,14 @@ public class UserIntegrationTests {
 
 	@Test
 	public void validUserShouldRegister() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpHeaders headers = getJsonHeaders();
 
-		UserRegisterForm user = new UserRegisterForm();
-		user.setFirstName("Valid");
-		user.setLastName("User");
-		user.setEmail("valid@gmail.com");
+		UserRegistrationForm user = new UserRegistrationForm();
+		user.setFirstName("Foo");
+		user.setLastName("Bar");
+		user.setEmail("valid-registration@mail.com");
 		user.setPassword("foobar");
-		HttpEntity<UserRegisterForm> request = new HttpEntity<UserRegisterForm>(user, headers);
+		HttpEntity<UserRegistrationForm> request = new HttpEntity<UserRegistrationForm>(user, headers);
 
 		ResponseEntity<Void> response = restTemplate.exchange("/users", HttpMethod.POST, request, Void.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -51,16 +49,14 @@ public class UserIntegrationTests {
 
 	@Test
 	public void invalidUserShouldNotRegister() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpHeaders headers = getJsonHeaders();
 
-		UserRegisterForm user = new UserRegisterForm();
-		user.setFirstName("Invalid");
-		user.setLastName("Password");
-		user.setEmail("invalid@gmail.com");
+		UserRegistrationForm user = new UserRegistrationForm();
+		user.setFirstName("Foo");
+		user.setLastName("Bar");
+		user.setEmail("invalid-registration@mail.com");
 		user.setPassword("foo");
-		HttpEntity<UserRegisterForm> request = new HttpEntity<UserRegisterForm>(user, headers);
+		HttpEntity<UserRegistrationForm> request = new HttpEntity<UserRegistrationForm>(user, headers);
 
 		ResponseEntity<Void> response = restTemplate.exchange("/users", HttpMethod.POST, request, Void.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -68,29 +64,33 @@ public class UserIntegrationTests {
 
 	@Test
 	public void duplicateUserShouldNotRegister() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpHeaders headers = getJsonHeaders();
 
-		UserRegisterForm user = new UserRegisterForm();
-		user.setFirstName("First");
-		user.setLastName("User");
-		user.setEmail("user@gmail.com");
+		UserRegistrationForm user = new UserRegistrationForm();
+		user.setFirstName("Foo");
+		user.setLastName("Bar");
+		user.setEmail("registration@mail.com");
 		user.setPassword("foobar");
-		HttpEntity<UserRegisterForm> request = new HttpEntity<UserRegisterForm>(user, headers);
+		HttpEntity<UserRegistrationForm> request = new HttpEntity<UserRegistrationForm>(user, headers);
 
 		ResponseEntity<Void> response = restTemplate.exchange("/users", HttpMethod.POST, request, Void.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
-		UserRegisterForm duplicateUser = new UserRegisterForm();
-		duplicateUser.setFirstName("Duplicate");
-		duplicateUser.setLastName("User");
-		duplicateUser.setEmail("user@gmail.com");
+		UserRegistrationForm duplicateUser = new UserRegistrationForm();
+		duplicateUser.setFirstName("Foo");
+		duplicateUser.setLastName("Baz");
+		duplicateUser.setEmail("registration@mail.com");
 		duplicateUser.setPassword("foobar");
-		HttpEntity<UserRegisterForm> duplicateRequest = new HttpEntity<UserRegisterForm>(duplicateUser, headers);
+		HttpEntity<UserRegistrationForm> duplicateRequest = new HttpEntity<UserRegistrationForm>(duplicateUser, headers);
 
 		ResponseEntity<Void> duplicateResponse = restTemplate.exchange("/users", HttpMethod.POST, duplicateRequest, Void.class);
 		assertThat(duplicateResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 	}
 
+	private HttpHeaders getJsonHeaders() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		return headers;
+	}
 }

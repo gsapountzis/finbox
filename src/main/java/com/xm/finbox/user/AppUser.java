@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class AppUser {
 
 	@Id
 	@Column(name = "id")
@@ -22,12 +22,12 @@ public class User {
 	@Column(name = "email")
 	private String email;
 
-	@Column(name = "encoded_password")
-	private String encodedPassword;
+	@Column(name = "password")
+	private String password;
 
 	// -- Constructors
 
-	public User() {
+	public AppUser() {
 	}
 
 	// -- Getters / Setters
@@ -64,12 +64,12 @@ public class User {
 		this.email = email;
 	}
 
-	public String getEncodedPassword() {
-		return encodedPassword;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setEncodedPassword(String encodedPassword) {
-		this.encodedPassword = encodedPassword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

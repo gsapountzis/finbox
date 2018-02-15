@@ -4,5 +4,5 @@ create table users(
 	first_name			varchar(255) not null,
 	last_name			varchar(255) not null,
 	email				varchar(255) not null,
-	encoded_password	varchar(128) not null
+	password			varchar(128) not null
 );

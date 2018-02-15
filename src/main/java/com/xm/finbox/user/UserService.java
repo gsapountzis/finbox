@@ -21,19 +21,29 @@ public class UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	public String register(UserRegisterForm userDto) throws UserExistsException {
+	public String register(UserRegistrationForm userDto) throws UserExistsException {
 		boolean emailExists = repository.existsByEmail(userDto.getEmail());
 		if (emailExists) {
 			throw new UserExistsException("User already exists");
 		}
 
-		User user = mapper.map(userDto);
+		AppUser user = mapper.map(userDto);
 		String id = UUID.randomUUID().toString();
 		user.setId(id);
-		String encodedPassword = passwordEncoder.encode(userDto.getPassword());
-		user.setEncodedPassword(encodedPassword);
+		String password = passwordEncoder.encode(userDto.getPassword());
+		user.setPassword(password);
 		repository.save(user);
 		return id;
+	}
+
+	public Account getAccoutDetails(String email) {
+		AppUser user = repository.findByEmail(email);
+		if (user == null) {
+			return null;
+		}
+
+		Account account = mapper.map(user);
+		return account;
 	}
 
 }
