@@ -16,14 +16,12 @@ import org.springframework.stereotype.Component;
  * This is required for proper token refresh and expiration. Both can be handled
  * with JWT in a stateless manner but they become a little awkward. Token
  * refresh requires the server to regenerate the token on each access and the
- * client to update its token on each request and token expiration can be
+ * client to update its token on each request, and token expiration can be
  * handled by simply dropping the token client-side but the server would still
  * consider the token as valid.
  *
  * Ideally this should be implemented with a scalable cluster-scoped memory,
  * cache or database.
- *
- * XXX Can we get rid of this store ?
  *
  * @author sap
  *

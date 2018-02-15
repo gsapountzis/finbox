@@ -36,7 +36,7 @@ public class AppFile {
 	// Lazy load file contents to avoid costly fetches,
 	// this configuration is not sufficient on its own,
 	// see https://vladmihalcea.com/the-best-way-to-lazy-load-entity-attributes-using-jpa-and-hibernate/
-	// Could also use separate table with shared primary key
+	// Could also use separate table with shared primary key.
 	@Lob
 	@Column(name = "contents")
 	@Basic(fetch = FetchType.LAZY)
