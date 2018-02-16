@@ -102,8 +102,7 @@ public class TokenStore {
 	/**
 	 * Checks if a token has expired.
 	 *
-	 * @param access
-	 *            the last access time of the time
+	 * @param access the last access time of the time
 	 *
 	 * @return if the token has expired
 	 */

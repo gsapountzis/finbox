@@ -46,7 +46,7 @@ public class FileController {
 	 * This endpoint is used to create a new file.
 	 *
 	 * The filename in the database must be the filename of the file just uploaded.
-	 *
+	 * <p>
 	 * XXX Questions for file create:
 	 * is file name unique globally or per-user ?
 	 * if create only creates, I should return 201 ?
@@ -74,7 +74,7 @@ public class FileController {
 
 	/**
 	 * This endpoint is used to delete a file which belongs to the logged in user.
-	 *
+	 * <p>
 	 * XXX Questions for file delete:
 	 * 404 seems more appropriate for file does not exist / does not belong to user
 	 *
@@ -105,7 +105,7 @@ public class FileController {
 
 	/**
 	 * This endpoint is used to download the contents of a file.
-	 *
+	 * <p>
 	 * XXX Questions for file download:
 	 * 404 seems more appropriate for file does not exist / does not belong to user
 	 *
@@ -123,7 +123,6 @@ public class FileController {
 	@GetMapping(path = "/files/{fileId}/contents")
 	public ResponseEntity<byte[]> download(Authentication auth, @PathVariable String fileId) {
 		try {
-			// TODO implement streaming download
 			FileMetadata metadata = fileService.getMetadata(auth.getName(), fileId);
 			byte[] contents = fileService.getContents(auth.getName(), fileId);
 
@@ -143,6 +142,7 @@ public class FileController {
 			headers.setContentLength(metadata.getFileSize());
 			headers.setLastModified(metadata.getModificationDate().getTime());
 
+			// TODO implement streaming download
 			return ResponseEntity.ok().headers(headers).body(contents);
 		}  catch (FileNotFoundException ex) {
 			// TODO set error details document

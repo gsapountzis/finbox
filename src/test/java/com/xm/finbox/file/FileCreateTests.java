@@ -68,6 +68,7 @@ public class FileCreateTests {
 	public void duplicateFileShouldFail() {
 		String authorization = FileUserUtil.user(restTemplate, "create-duplicate-file@mail.com");
 
+		// Create file
 		FileForm file = new FileForm();
 		file.setName("create-duplicate-foo.txt");
 		file.setContents(Base64Utils.encodeToString("foo".getBytes()));
@@ -84,7 +85,7 @@ public class FileCreateTests {
 		assertThat(metadata.getName()).isEqualTo("create-duplicate-foo.txt");
 		assertThat(metadata.getMimeType()).isEqualTo("text/plain");
 
-
+		// Create duplicate file
 		file = new FileForm();
 		file.setName("create-duplicate-foo.txt");
 		file.setContents(Base64Utils.encodeToString("foo".getBytes()));

@@ -3,7 +3,11 @@
 
 	mvn spring-boot:run
 
-# How to test users from cmd line
+# How to test automatically
+
+	mvn test
+
+# How to test 'users' from cmd line
 
 	http -vj POST localhost:8080/users firstName=Foo lastName=Bar email=foo@bar.com password=foobar
 
@@ -17,7 +21,7 @@
 
 	http -vj POST localhost:8080/logout 'Authorization: Bearer <JWT>'
 
-# How to test files from cmd line
+# How to test 'files' from cmd line
 
 	http -vj POST localhost:8080/files name=foo.txt contents=Zm9v 'Authorization: Bearer <JWT>'
 

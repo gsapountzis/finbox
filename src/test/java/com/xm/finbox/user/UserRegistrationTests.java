@@ -67,7 +67,7 @@ public class UserRegistrationTests {
 		UserRegistrationForm user = new UserRegistrationForm();
 		user.setFirstName("Foo");
 		user.setLastName("Bar");
-		user.setEmail("registration@mail.com");
+		user.setEmail("duplicate-registration@mail.com");
 		user.setPassword("foobar");
 		HttpEntity<UserRegistrationForm> request = new HttpEntity<>(user, headers);
 
@@ -77,7 +77,7 @@ public class UserRegistrationTests {
 		UserRegistrationForm duplicateUser = new UserRegistrationForm();
 		duplicateUser.setFirstName("Foo");
 		duplicateUser.setLastName("Baz");
-		duplicateUser.setEmail("registration@mail.com");
+		duplicateUser.setEmail("duplicate-registration@mail.com");
 		duplicateUser.setPassword("foobar");
 		HttpEntity<UserRegistrationForm> duplicateRequest = new HttpEntity<>(duplicateUser, headers);
 

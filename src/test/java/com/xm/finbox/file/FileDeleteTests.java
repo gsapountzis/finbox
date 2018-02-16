@@ -92,8 +92,8 @@ public class FileDeleteTests {
 		String fileId = metadata.getId();
 		assertThat(fileId).isNotBlank();
 
-		// Delete file
-		authorization = FileUserUtil.user(restTemplate, "delete-nice-file@mail.com");
+		// Try delete file as different user
+		authorization = FileUserUtil.user(restTemplate, "delete-unauth-file@mail.com");
 
 		headers = FileUserUtil.getJsonHeaders();
 		headers.set("Authorization", authorization);

@@ -29,6 +29,8 @@ public class UserAccountTests {
 	@LocalServerPort
 	private int port;
 
+	private static final String AUTH = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI5NDM3MTU0OS05Mzg1LTQ2MWUtYmFhMi1iNGViYWM2MjU2MzMiLCJzdWIiOiJmb29AYmFyLmNvbSIsImlhdCI6MTUxODY1Mzg0Nn0.gwgrgln_31SjsHHBSb2z-YQR2xjMXUJbwgXVB6NVNuP7cxxmTpEe8wdfg0Knp4qt5a9cekGBx7EEWxBkE1udLA";
+
 	@Test
 	public void authorizedUserShouldGetDetails() {
 		HttpHeaders headers = getJsonHeaders();
@@ -70,7 +72,7 @@ public class UserAccountTests {
 	@Test
 	public void unauthorizedUserShouldNotGetDetails() {
 		HttpHeaders headers = getJsonHeaders();
-		headers.set("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI5NDM3MTU0OS05Mzg1LTQ2MWUtYmFhMi1iNGViYWM2MjU2MzMiLCJzdWIiOiJmb29AYmFyLmNvbSIsImlhdCI6MTUxODY1Mzg0Nn0.gwgrgln_31SjsHHBSb2z-YQR2xjMXUJbwgXVB6NVNuP7cxxmTpEe8wdfg0Knp4qt5a9cekGBx7EEWxBkE1udLA");
+		headers.set("Authorization", AUTH);
 		HttpEntity<Void> detailsRequest = new HttpEntity<>(headers);
 
 		ResponseEntity<Account> detailsResponse = restTemplate.exchange("/me", HttpMethod.GET, detailsRequest, Account.class);

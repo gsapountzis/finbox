@@ -3,6 +3,7 @@ package com.xm.finbox.file;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -69,6 +70,7 @@ public class FileListTests {
 		assertThat(listResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
 		List<FileMetadata> metadata = listResponse.getBody();
-		assertThat(metadata.size()).isEqualTo(2);
+		List<String> names = metadata.stream().map(FileMetadata::getName).collect(Collectors.toList());
+		assertThat(names).contains("list-foo.txt", "list-bar.txt");
 	}
 }

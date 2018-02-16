@@ -1,7 +1,7 @@
 
 * use https
 * use salt phrase for passwords
-* add max size for file contents
+* add max size for string fields
 * add max size for file contents
 * strip whitespace from string fields
 * display validation errors at client side

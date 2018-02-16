@@ -58,8 +58,20 @@ public class UserLoginTests {
 	public void wrongPasswordShouldFailAuthentication() {
 		HttpHeaders headers = getJsonHeaders();
 
+		// Register
+		UserRegistrationForm user = new UserRegistrationForm();
+		user.setFirstName("Foo");
+		user.setLastName("Bar");
+		user.setEmail("wrong-login@mail.com");
+		user.setPassword("foobar");
+		HttpEntity<UserRegistrationForm> registrationRequest = new HttpEntity<>(user, headers);
+
+		ResponseEntity<Void> registrationResponse = restTemplate.exchange("/users", HttpMethod.POST, registrationRequest, Void.class);
+		assertThat(registrationResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+
+		// Login
 		UserLoginForm credentials = new UserLoginForm();
-		credentials.setEmail("valid-login@mail.com");
+		credentials.setEmail("wrong-login@mail.com");
 		credentials.setPassword("foo");
 		HttpEntity<UserLoginForm> loginRequest = new HttpEntity<>(credentials, headers);
 

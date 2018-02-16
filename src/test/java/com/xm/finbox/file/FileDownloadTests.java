@@ -101,7 +101,7 @@ public class FileDownloadTests {
 		assertThat(fileId).isNotBlank();
 
 		// Download file
-		authorization = FileUserUtil.user(restTemplate, "download-nice-file@mail.com");
+		authorization = FileUserUtil.user(restTemplate, "download-unauth-file@mail.com");
 
 		headers = FileUserUtil.getJsonHeaders();
 		headers.set("Authorization", authorization);

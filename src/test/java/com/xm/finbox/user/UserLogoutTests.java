@@ -29,6 +29,8 @@ public class UserLogoutTests {
 	@LocalServerPort
 	private int port;
 
+	private static final String AUTH = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI5NDM3MTU0OS05Mzg1LTQ2MWUtYmFhMi1iNGViYWM2MjU2MzMiLCJzdWIiOiJmb29AYmFyLmNvbSIsImlhdCI6MTUxODY1Mzg0Nn0.gwgrgln_31SjsHHBSb2z-YQR2xjMXUJbwgXVB6NVNuP7cxxmTpEe8wdfg0Knp4qt5a9cekGBx7EEWxBkE1udLA";
+
 	@Test
 	public void authorizedUserShouldLogout() {
 		HttpHeaders headers = getJsonHeaders();
@@ -66,7 +68,7 @@ public class UserLogoutTests {
 	@Test
 	public void unauthorizedUserShouldNotLogout() {
 		HttpHeaders headers = getJsonHeaders();
-		headers.set("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI5NDM3MTU0OS05Mzg1LTQ2MWUtYmFhMi1iNGViYWM2MjU2MzMiLCJzdWIiOiJmb29AYmFyLmNvbSIsImlhdCI6MTUxODY1Mzg0Nn0.gwgrgln_31SjsHHBSb2z-YQR2xjMXUJbwgXVB6NVNuP7cxxmTpEe8wdfg0Knp4qt5a9cekGBx7EEWxBkE1udLA");
+		headers.set("Authorization", AUTH);
 		HttpEntity<Void> logoutRequest = new HttpEntity<>(headers);
 
 		ResponseEntity<Void> logoutResponse = restTemplate.exchange("/logout", HttpMethod.POST, logoutRequest, Void.class);
